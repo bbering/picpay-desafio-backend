@@ -35,7 +35,7 @@ public class CommonUser {
     @Column(name = "CPF", nullable = false, unique = true)
     @Size(min = 11, max = 11, message = "O CPF deve ter obrigatoriamente 11 dígitos")
     @Pattern(regexp = "^[0-9]{11}$", message = "O CPF deve conter exatamente 11 dígitos numéricos.")
-    private String CPF;    
+    private String CPF;
 
     @Column(name = "email", nullable = false)
     @Size(max = 256, message = "O email deve possuir, no máximo, 256 caracteres")
