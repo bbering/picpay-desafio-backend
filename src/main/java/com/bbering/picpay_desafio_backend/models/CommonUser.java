@@ -1,4 +1,4 @@
-package com.bbering.models;
+package com.bbering.picpay_desafio_backend.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
