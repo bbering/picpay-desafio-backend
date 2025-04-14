@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bbering.picpay_desafio_backend.dtos.StoreKeeperRequestDTO;
 import com.bbering.picpay_desafio_backend.dtos.StoreKeeperResponseDTO;
@@ -56,6 +57,7 @@ public class StoreKeeperService {
         return skToReturn;
     }
 
+    @Transactional
     public StoreKeeperResponseDTO createStoreKeeper(StoreKeeperRequestDTO skRequestDTO) {
         StoreKeeper sk = toEntity(skRequestDTO);
 
@@ -68,6 +70,7 @@ public class StoreKeeperService {
         return skResponseDTO;
     }
 
+    @Transactional
     public StoreKeeperResponseDTO updateStoreKeeper(StoreKeeperRequestDTO skRequestDTO, Long id) {
         StoreKeeper skToUpdate = storeKeeperRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Nenhum lojista encontrado com o id"));
@@ -87,5 +90,10 @@ public class StoreKeeperService {
 
         StoreKeeperResponseDTO skToReturn = toDTO(skToUpdate);
         return skToReturn;
+    }
+
+    @Transactional
+    public void deleteStoreKeeper(Long id) {
+        storeKeeperRepository.deleteById(id);
     }
 }
