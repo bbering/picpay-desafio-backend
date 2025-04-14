@@ -62,6 +62,10 @@ public class StoreKeeperService {
         StoreKeeper sk = toEntity(skRequestDTO);
 
         if (skRequestDTO.getPassword() != null && !skRequestDTO.getPassword().isEmpty()) {
+            if (!isPasswordValid(skRequestDTO.getPassword())) {
+                throw new IllegalArgumentException("A senha fornecida é muito fraca.");
+            }
+
             sk.setPassword(hashPassword(skRequestDTO.getPassword()));
         }
 
@@ -70,13 +74,19 @@ public class StoreKeeperService {
         return skResponseDTO;
     }
 
+    // metodo auxiliar para validar a senha (para substituir o pattern na model)
+    private boolean isPasswordValid(String password) {
+        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$";
+        return password.matches(regex);
+    }
+
     @Transactional
     public StoreKeeperResponseDTO updateStoreKeeper(StoreKeeperRequestDTO skRequestDTO, Long id) {
         StoreKeeper skToUpdate = storeKeeperRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Nenhum lojista encontrado com o id"));
 
-        if (skRequestDTO.getCNPJ() != null) {
-            skToUpdate.setCNPJ(skRequestDTO.getCNPJ());
+        if (skRequestDTO.getCnpj() != null) {
+            skToUpdate.setCnpj(skRequestDTO.getCnpj());
         }
         if (skRequestDTO.getEmail() != null) {
             skToUpdate.setEmail(skRequestDTO.getEmail());

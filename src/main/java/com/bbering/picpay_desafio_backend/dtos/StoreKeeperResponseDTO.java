@@ -12,6 +12,6 @@ import lombok.Setter;
 public class StoreKeeperResponseDTO {
     private Long id;
     private String fullName;
-    private String CNPJ;
+    private String Cnpj;
     private String email;
 }

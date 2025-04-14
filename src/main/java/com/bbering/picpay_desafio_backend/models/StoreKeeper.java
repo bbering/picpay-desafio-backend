@@ -1,4 +1,4 @@
-package com.bbering.models;
+package com.bbering.picpay_desafio_backend.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,15 +35,12 @@ public class StoreKeeper {
     @Column(name = "CNPJ", nullable = false, unique = true)
     @Size(min = 14, max = 14, message = "O CNPJ deve ter obrigatoriamente 14 dígitos")
     @Pattern(regexp = "^[0-9]{14}$", message = "O CNPJ deve conter exatamente 14 dígitos numéricos.")
-    private String CNPJ;
+    private String cnpj;
 
     @Column(name = "email", nullable = false, unique = true)
     @Size(max = 256, message = "O email deve possuir, no máximo, 256 caracteres")
     private String email;
 
     @Column(name = "password", nullable = false)
-    @Size(min = 8, max = 20, message = "A senha deve possuir entre 8 e 20 caracteres")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$", message = "A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial.")
     private String password;
-
 }
