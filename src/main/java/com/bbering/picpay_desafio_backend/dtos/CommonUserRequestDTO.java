@@ -1,5 +1,6 @@
 package com.bbering.picpay_desafio_backend.dtos;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -16,6 +17,7 @@ public class CommonUserRequestDTO {
     @Pattern(regexp = "^[0-9]{11}$", message = "O CPF deve conter exatamente 11 dígitos numéricos.")
     private String CPF;
 
+    @Email(message = "Email inválido.")
     @Size(max = 256, message = "O email deve possuir, no máximo, 256 caracteres")
     private String email;
 
