@@ -106,4 +106,9 @@ public class CommonUserService {
         return cmToReturn;
     }
 
+    @Transactional
+    public void deleteCommonUser(Long id) {
+        commonUserRepository.deleteById(id);
+    }
+
 }
