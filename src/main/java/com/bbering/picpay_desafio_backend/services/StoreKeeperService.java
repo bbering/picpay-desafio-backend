@@ -98,6 +98,8 @@ public class StoreKeeperService {
             skToUpdate.setPassword(hashPassword(skRequestDTO.getPassword()));
         }
 
+        storeKeeperRepository.save(skToUpdate);
+
         StoreKeeperResponseDTO skToReturn = toDTO(skToUpdate);
         return skToReturn;
     }

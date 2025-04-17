@@ -79,4 +79,31 @@ public class CommonUserService {
         return cmToReturn;
     }
 
+    @Transactional
+    public CommonUserResponseDTO updateCommonUser(CommonUserRequestDTO cmRequestDTO, Long id) {
+        CommonUser cmToUpdate = commonUserRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Nenhum usuário encontrado com o id!"));
+
+        if (cmRequestDTO.getCPF() != null) {
+            cmToUpdate.setCPF(cmRequestDTO.getCPF());
+        }
+
+        if (cmRequestDTO.getEmail() != null) {
+            cmToUpdate.setEmail(cmRequestDTO.getEmail());
+        }
+
+        if (cmRequestDTO.getFullName() != null) {
+            cmToUpdate.setFullName(cmRequestDTO.getFullName());
+        }
+
+        if (cmRequestDTO.getPassword() != null) {
+            cmToUpdate.setPassword(hashPassword(cmRequestDTO.getPassword()));
+        }
+
+        commonUserRepository.save(cmToUpdate);
+
+        CommonUserResponseDTO cmToReturn = toDTO(cmToUpdate);
+        return cmToReturn;
+    }
+
 }
