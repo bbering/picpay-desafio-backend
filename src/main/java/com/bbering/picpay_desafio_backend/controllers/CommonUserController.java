@@ -25,6 +25,11 @@ public class CommonUserController {
     @Autowired
     private CommonUserService commonUserService;
 
+    @GetMapping("/status")
+    public String healthFallback(){
+        return "API is running";
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> findCommonUserById(@PathVariable Long id) {
         CommonUserResponseDTO cmToReturn = commonUserService.findCommonUserById(id);
