@@ -42,8 +42,6 @@ public class CommonUser {
     private String email;
 
     @Column(name = "password", nullable = false)
-    @Size(min = 8, max = 20, message = "A senha deve possuir entre 8 e 20 caracteres")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$", message = "A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial.")
     private String password;
 
 }
