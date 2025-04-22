@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bbering.picpay_desafio_backend.dtos.TransactionRequestDTO;
+import com.bbering.picpay_desafio_backend.dtos.TransactionResponseDTO;
 import com.bbering.picpay_desafio_backend.models.CommonUser;
 import com.bbering.picpay_desafio_backend.models.StoreKeeper;
 import com.bbering.picpay_desafio_backend.models.Transactions;
@@ -38,6 +39,19 @@ public class TransactionsService {
         transaction.setReceiver(receiver);
 
         return transaction;
+    }
+
+    public TransactionResponseDTO toDTO(Transactions transaction) {
+        TransactionResponseDTO tResponseDTO = new TransactionResponseDTO();
+        BeanUtils.copyProperties(transaction, tResponseDTO);
+
+        tResponseDTO.setReceiverId(transaction.getReceiver().getId());
+        tResponseDTO.setSenderId(transaction.getSender().getId());
+
+        tResponseDTO.setReceiverName(transaction.getReceiver().getFullName());
+        tResponseDTO.setSenderName(transaction.getSender().getFullName());
+
+        return tResponseDTO;
     }
 
 }
