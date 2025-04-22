@@ -1,5 +1,6 @@
 package com.bbering.picpay_desafio_backend.services;
 
+import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -74,6 +75,10 @@ public class CommonUserService {
             cm.setPassword(hashPassword(cm.getPassword()));
         }
 
+        if (cm.getBalance() == null) {
+            cm.setBalance(BigDecimal.ZERO);
+        }
+
         commonUserRepository.save(cm);
         CommonUserResponseDTO cmToReturn = toDTO(cm);
         return cmToReturn;
@@ -86,6 +91,10 @@ public class CommonUserService {
 
         if (cmRequestDTO.getCPF() != null) {
             cmToUpdate.setCPF(cmRequestDTO.getCPF());
+        }
+
+        if (cmRequestDTO.getBalance() != null){
+            cmToUpdate.setBalance(cmRequestDTO.getBalance());
         }
 
         if (cmRequestDTO.getEmail() != null) {
