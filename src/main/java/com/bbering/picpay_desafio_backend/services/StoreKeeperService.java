@@ -1,5 +1,6 @@
 package com.bbering.picpay_desafio_backend.services;
 
+import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -69,6 +70,10 @@ public class StoreKeeperService {
             sk.setPassword(hashPassword(skRequestDTO.getPassword()));
         }
 
+        if (sk.getBalance() == null) {
+            sk.setBalance(BigDecimal.ZERO);
+        }
+
         storeKeeperRepository.save(sk);
         StoreKeeperResponseDTO skResponseDTO = toDTO(sk);
         return skResponseDTO;
@@ -87,6 +92,9 @@ public class StoreKeeperService {
 
         if (skRequestDTO.getCnpj() != null) {
             skToUpdate.setCnpj(skRequestDTO.getCnpj());
+        }
+        if (skRequestDTO.getBalance() != null) {
+            skToUpdate.setBalance(skRequestDTO.getBalance());
         }
         if (skRequestDTO.getEmail() != null) {
             skToUpdate.setEmail(skRequestDTO.getEmail());
