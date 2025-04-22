@@ -19,31 +19,31 @@ import com.bbering.picpay_desafio_backend.services.StoreKeeperService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/storekeepers")
 public class StoreKeeperController {
 
     @Autowired
     private StoreKeeperService skService;
 
-    @GetMapping("/sk/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> findStoreKeeperById(@PathVariable Long id) {
         StoreKeeperResponseDTO skResponse = skService.findStoreKeeperById(id);
         return new ResponseEntity<>(skResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/sk")
+    @PostMapping()
     public ResponseEntity<?> createNewStoreKeeper(@Valid @RequestBody StoreKeeperRequestDTO skDTO) {
         StoreKeeperResponseDTO skResponse = skService.createStoreKeeper(skDTO);
         return new ResponseEntity<>(skResponse, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/sk/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteStoreKeeper(@PathVariable Long id) {
         skService.deleteStoreKeeper(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/sk/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateStoreKeeperData(@Valid @RequestBody StoreKeeperRequestDTO skDTO,
             @PathVariable Long id) {
         StoreKeeperResponseDTO skResponse = skService.updateStoreKeeper(skDTO, id);
