@@ -1,5 +1,7 @@
 package com.bbering.picpay_desafio_backend.models;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -43,4 +45,7 @@ public class StoreKeeper {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "balance")
+    private BigDecimal balance = BigDecimal.ZERO;
 }
