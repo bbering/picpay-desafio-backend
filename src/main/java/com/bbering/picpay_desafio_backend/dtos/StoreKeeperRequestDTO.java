@@ -1,5 +1,7 @@
 package com.bbering.picpay_desafio_backend.dtos;
 
+import java.math.BigDecimal;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -22,4 +24,6 @@ public class StoreKeeperRequestDTO {
     private String email;
 
     private String password;
+
+    private BigDecimal balance = BigDecimal.ZERO;
 }
