@@ -37,11 +37,11 @@ public class Transactions {
     private LocalDateTime timestamp;
 
     @ManyToOne
-    @JoinColumn(name = "sender_id")
-    private CommonUser sender;
+    @JoinColumn(name = "sender_id", nullable = false)
+    private User sender;
 
     @ManyToOne
-    @JoinColumn(name = "receiver_id")
-    private StoreKeeper receiver;
+    @JoinColumn(name = "receiver_id", nullable = false)
+    private User receiver;
 
 }
