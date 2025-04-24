@@ -25,6 +25,13 @@ public class TransactionsService {
     @Autowired
     private StoreKeeperRepository storeKeeperRepository;
 
+    /*
+     * Método auxiliar para buscar User, será usado nas validações
+     * public User getUserById(Long id){
+     * 
+     * }
+     */
+
     public Transactions toEntity(TransactionRequestDTO trnRequestDTO) {
         Transactions transaction = new Transactions();
         BeanUtils.copyProperties(trnRequestDTO, transaction);

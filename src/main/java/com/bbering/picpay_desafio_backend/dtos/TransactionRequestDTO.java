@@ -17,4 +17,6 @@ public class TransactionRequestDTO {
     private Long senderId;
 
     private Long receiverId;
+
+    private String receiverType;
 }
