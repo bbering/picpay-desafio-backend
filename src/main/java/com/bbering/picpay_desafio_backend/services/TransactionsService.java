@@ -9,6 +9,7 @@ import com.bbering.picpay_desafio_backend.dtos.TransactionResponseDTO;
 import com.bbering.picpay_desafio_backend.models.CommonUser;
 import com.bbering.picpay_desafio_backend.models.StoreKeeper;
 import com.bbering.picpay_desafio_backend.models.Transactions;
+import com.bbering.picpay_desafio_backend.models.User;
 import com.bbering.picpay_desafio_backend.repositories.CommonUserRepository;
 import com.bbering.picpay_desafio_backend.repositories.StoreKeeperRepository;
 import com.bbering.picpay_desafio_backend.repositories.TransactionsRepository;
@@ -24,13 +25,6 @@ public class TransactionsService {
 
     @Autowired
     private StoreKeeperRepository storeKeeperRepository;
-
-    /*
-     * Método auxiliar para buscar User, será usado nas validações
-     * public User getUserById(Long id){
-     * 
-     * }
-     */
 
     public Transactions toEntity(TransactionRequestDTO trnRequestDTO) {
         Transactions transaction = new Transactions();
@@ -59,6 +53,16 @@ public class TransactionsService {
         tResponseDTO.setSenderName(transaction.getSender().getFullName());
 
         return tResponseDTO;
+    }
+
+    public User findUserById(String userType, Long id) {
+        return switch (userType.toLowerCase()) {
+            case "usuario" -> commonUserRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Nenhum usuário encontrado com o ID"));
+            case "lojista" -> storeKeeperRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Nenhum lojista encontrado com o ID"));
+            default -> throw new IllegalArgumentException("Tipo de usuário inválido");
+        };
     }
 
 }
