@@ -17,6 +17,8 @@ import com.bbering.picpay_desafio_backend.repositories.CommonUserRepository;
 import com.bbering.picpay_desafio_backend.repositories.StoreKeeperRepository;
 import com.bbering.picpay_desafio_backend.repositories.TransactionsRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class TransactionsService {
 
@@ -89,4 +91,41 @@ public class TransactionsService {
         }
 
     }
+
+    @Transactional
+    public TransactionResponseDTO createNewTransaction(TransactionRequestDTO transactionData) {
+
+        User sender = findUserById("usuario", transactionData.getSenderId());
+        User receiver = findUserById(transactionData.getReceiverType(), transactionData.getReceiverId());
+
+        if (sender.getBalance().compareTo(transactionData.getAmount()) < 0) {
+            throw new RuntimeException("Saldo insuficiente para efetuar a transação");
+        }
+
+        Transactions transactionToSave = toEntity(transactionData);
+
+        if (validateTransaction()) {
+            sender.setBalance(sender.getBalance().subtract(transactionData.getAmount()));
+
+            if (receiver instanceof StoreKeeper) {
+                StoreKeeper storeKeeperReceiver = (StoreKeeper) receiver;
+                storeKeeperReceiver.setBalance(storeKeeperReceiver.getBalance().add(transactionData.getAmount()));
+                storeKeeperRepository.save(storeKeeperReceiver);
+            } else if (receiver instanceof CommonUser) {
+                CommonUser commonUserReceiver = (CommonUser) receiver;
+                commonUserReceiver.setBalance(commonUserReceiver.getBalance().add(transactionData.getAmount()));
+                commonUserRepository.save(commonUserReceiver);
+            }
+
+            commonUserRepository.save((CommonUser) sender);
+
+            transactionsRepository.save(transactionToSave);
+
+            TransactionResponseDTO transactionToReturn = toDTO(transactionToSave);
+            return transactionToReturn;
+        } else {
+            throw new RuntimeException("A transação não foi autorizada");
+        }
+    }
+
 }
