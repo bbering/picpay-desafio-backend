@@ -1,5 +1,8 @@
 package com.bbering.picpay_desafio_backend.services;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -116,6 +119,9 @@ public class TransactionsService {
                 commonUserReceiver.setBalance(commonUserReceiver.getBalance().add(transactionData.getAmount()));
                 commonUserRepository.save(commonUserReceiver);
             }
+
+            // setar o timestamp com o horario da transação
+            transactionToSave.setTimestamp(LocalDateTime.now(ZoneOffset.UTC));
 
             commonUserRepository.save((CommonUser) sender);
 
