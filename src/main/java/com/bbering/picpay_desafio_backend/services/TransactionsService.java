@@ -1,5 +1,6 @@
 package com.bbering.picpay_desafio_backend.services;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
@@ -8,8 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 import com.bbering.picpay_desafio_backend.dtos.AuthorizationResponseDTO;
+import com.bbering.picpay_desafio_backend.dtos.NotifyDataDTO;
+import com.bbering.picpay_desafio_backend.dtos.NotifyResponseDTO;
 import com.bbering.picpay_desafio_backend.dtos.TransactionRequestDTO;
 import com.bbering.picpay_desafio_backend.dtos.TransactionResponseDTO;
 import com.bbering.picpay_desafio_backend.models.CommonUser;
@@ -91,6 +97,31 @@ public class TransactionsService {
             }
         } catch (Exception e) {
             throw new RuntimeException("Erro ao enviar requisição ao serviço autorizador");
+        }
+
+    }
+
+    public String notifyPayment(Long senderId, Long receiverId, BigDecimal amount) {
+        String url = "https://util.devi.tools/api/v1/notify";
+
+        try {
+            NotifyDataDTO payload = new NotifyDataDTO();
+            payload.setSenderId(senderId);
+            payload.setReceiverId(receiverId);
+            payload.setAmount(amount);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<NotifyDataDTO> request = new HttpEntity<>(payload, headers);
+
+            ResponseEntity<NotifyResponseDTO> response = restTemplate.postForEntity(url, request,
+                    NotifyResponseDTO.class);
+
+            return response.getBody() != null ? response.getBody().toString() : "Algo de errado ocorreu!";
+
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao se comunicar com o serviço notificador");
         }
 
     }
