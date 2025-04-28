@@ -156,6 +156,8 @@ public class TransactionsService {
 
             commonUserRepository.save((CommonUser) sender);
 
+            notifyPayment(sender.getId(), receiver.getId(), transactionData.getAmount());
+
             transactionsRepository.save(transactionToSave);
 
             TransactionResponseDTO transactionToReturn = toDTO(transactionToSave);
