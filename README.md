@@ -47,7 +47,7 @@ As credenciais para acesso ao banco de dados são:
 - **Username**: sa
 - **Password**: 1234
 
-### Swagger
+## Swagger
 
 A documentação da API está disponível via Swagger em:
 
