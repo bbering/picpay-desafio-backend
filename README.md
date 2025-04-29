@@ -37,6 +37,17 @@ O projeto também aborda conceitos importantes como:
 2. A aplicação estará disponível em:  
    `http://localhost:8080`
 
+## Banco de Dados
+
+A aplicação utiliza um banco de dados em memória (H2) para que não seja necessário configurar uma nova conexão à um banco assim que o repositório for clonado.
+
+[http://localhost:8080/h2-console](http://localhost:8080/h2-console)
+
+As credenciais para acesso ao banco de dados são:
+
+- **Username**: sa
+- **Password**: 1234
+
 ### Swagger
 
 A documentação da API está disponível via Swagger em:
