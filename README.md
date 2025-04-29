@@ -34,8 +34,7 @@ O projeto também aborda conceitos importantes como:
     mvn spring-boot:run
     ```
 
-2. A aplicação estará disponível em:  
-   `http://localhost:8080`
+2. A aplicação estará disponível em: `http://localhost:8080`
 
 ## Banco de Dados
 
